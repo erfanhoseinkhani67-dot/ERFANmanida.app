@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>erfan.Manida.Co</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f5f5f5; }
+        input { padding: 10px; width: 100%; margin-bottom: 20px; }
+        .product { padding: 10px; background: #fff; margin-bottom: 10px; border-radius: 5px; }
+        button { padding: 10px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h2>erfan.Manida.Co</h2>
+    <input type="text" id="search" placeholder="جستجوی محصول..." onkeyup="searchProduct()">
+    <div id="productList"></div>
+
+    <h3>افزودن محصول جدید</h3>
+    <input type="text" id="newName" placeholder="اسم محصول">
+    <input type="text" id="newUnit" placeholder="واحد">
+    <input type="number" id="newPrice" placeholder="قیمت">
+    <input type="text" id="newBrand" placeholder="برند">
+    <button onclick="addProduct()">اضافه کن</button>
+
+    <script>
+        let products = [
+            {name: "Apple", unit: "kg", price: 50, brand: "FruitCo"},
+            {name: "Banana", unit: "kg", price: 20, brand: "FruitCo"},
+            {name: "Orange", unit: "kg", price: 30, brand: "CitrusInc"},
+            {name: "Milk", unit: "liter", price: 15, brand: "DairyFarm"}
+        ];
+
+        function showProducts(list) {
+            const container = document.getElementById("productList");
+            container.innerHTML = "";
+            list.forEach(p => {
+                container.innerHTML += <div class="product">
+                    <strong>${p.name}</strong><br>
+                    ${p.unit} - ${p.price} Toman - ${p.brand}
+                </div>;
+            });
+        }
+
+        function searchProduct() {
+            const query = document.getElementById("search").value.toLowerCase();
+            const filtered = products.filter(p => p.name.toLowerCase().includes(query));
+            showProducts(filtered);
+        }
+
+        function addProduct() {
+            const name = document.getElementById("newName").value;
+            const unit = document.getElementById("newUnit").value;
+            const price = document.getElementById("newPrice").value;
+            const brand = document.getElementById("newBrand").value;
+
+            if(name && unit && price && brand) {
+                products.push({name, unit, price, brand});
+                showProducts(products);
+                document.getElementById("newName").value = "";
+                document.getElementById("newUnit").value = "";
+                document.getElementById("newPrice").value = "";
+                document.getElementById("newBrand").value = "";
+            } else {
+                alert("لطفاً همه فیلدها را پر کنید!");
+            }
+        }
+
+        showProducts(products);
+    </script>
+</body>
+</html>
